@@ -1,102 +1,29 @@
-# 🎬 NETFLIX MOVIE RECOMMENDER SYSTEM
+# 🎬 Netflix Movie Recommender
 
-## Overview
-A **production-ready**, **state-of-the-art** movie recommendation system using MovieLens 1M dataset, combining multiple machine learning approaches:
+Movie recommendation system using machine learning.
 
-- **SQL** - Database optimization
-- **Pandas & NumPy** - Data processing  
-- **Scikit-learn** - Classical ML algorithms
-- **XGBoost** - Advanced gradient boosting
-- **TensorFlow/Keras** - Deep learning models
-- **Plotly** - Interactive visualizations
+## Files
 
----
+### Code
+- `streamlit_app.py` - Main web application
+- `analytics.py` - Analytics functions
+- `ui.py` - UI components
+- `config.py` - Configuration settings
 
-## 📊 System Architecture
+### Data
+- `processed_ratings.csv` - Movie ratings data
+- `processed_movies.csv` - Movie information
+- `processed_users.csv` - User data
+- `movie_features.csv` - Movie features
+- `user_features.csv` - User features
+- `interaction_matrix.csv` - User-movie interactions
 
-### Phase 1: Data Exploration & EDA
-**File:** `1_data_exploration.py`
-- Load and analyze MovieLens 1M dataset
-- Statistical summaries and distributions
-- Temporal pattern analysis
-- EDA visualizations (matplotlib/seaborn)
+## Installation
 
-**Outputs:**
-- `eda_analysis.png` - Comprehensive EDA plots
-- `processed_ratings.csv` - Cleaned ratings
-- `processed_movies.csv` - Movie metadata
-- `processed_users.csv` - User demographics
-
----
-
-### Phase 2: SQL Database Setup
-**File:** `2_sql_database.py`
-- Create SQLite database with optimized schema
-- Index creation for fast queries
-- Feature computation (user & movie stats)
-- SQL operations for data management
-
-**Features Computed:**
-- User factors: ratings count, mean, variance, engagement
-- Movie factors: popularity, quality, ratings distribution
-- Temporal features: last rating date, etc.
-
-**Database:**
-- `recommender_system.db` - Main SQLite database
-
----
-
-### Phase 3: Feature Engineering
-**File:** `3_feature_engineering.py`
-- Create comprehensive feature vectors
-- User engagement & consistency scores
-- Movie quality & popularity metrics
-- SVD embeddings for users and movies
-- Genre one-hot encoding
-
-**Feature Output:**
-- `user_features.csv` - 11 user features
-- `movie_features.csv` - 20+ movie features
-- `interaction_matrix.csv` - User-movie ratings matrix
-- `user_embeddings.csv` - 50-dim user embeddings
-- `movie_embeddings.csv` - 50-dim movie embeddings
-
----
-
-### Phase 4: Collaborative Filtering
-**File:** `4_collaborative_filtering.py`
-- **User-based CF**: Similar users → similar preferences
-- **Item-based CF**: Similar movies → similar ratings
-- **Matrix Factorization**: Factorize rating matrix
-- **Hybrid approach**: Combine user + item-based
-
-**Models Saved:**
-- `user_similarity.npy` - User-user similarity matrix
-- `item_similarity.npy` - Movie-movie similarity matrix
-- `mf_user_factors.npy` - User latent factors
-- `mf_item_factors.npy` - Movie latent factors
-
-**Algorithms:**
-- Cosine similarity computation
-- Low-rank matrix approximation
-- Weighted neighbor aggregation
-
----
-
-### Phase 5: Content-Based Filtering
-**File:** `5_content_based.py`
-- Use movie features (genre, rating, popularity)
-- Find movies similar to user's preferences
-- Genre-based recommendation
-- Feature similarity scores
-
-**Approach:**
-- Standardize movie features
-- Compute cosine similarity between movies
-- Profile user preferences from rated movies
-- Recommend similar content
-
----
+```bash
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
 
 ### Phase 6: XGBoost Rating Prediction
 **File:** `6_xgboost_model.py`
