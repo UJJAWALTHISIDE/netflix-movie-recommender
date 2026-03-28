@@ -162,7 +162,7 @@ with tab5:
                 go.Box(y=ratings['Rating'], name='Global Ratings', marker_color='#e50914')
             ])
             fig_box.update_layout(title="Rating Distribution (Box Plot)", height=400, showlegend=False)
-            st.plotly_chart(fig_box, use_container_width=True)
+            st.plotly_chart(fig_box)
         
         with col2:
             # User rating statistics
@@ -189,7 +189,7 @@ with tab5:
                     marker_color='#221f1f'
                 ))
                 fig_hist.update_layout(title="User Rating Histogram", height=400, xaxis_title="Rating", yaxis_title="Count")
-                st.plotly_chart(fig_hist, use_container_width=True)
+                st.plotly_chart(fig_hist)
             else:
                 st.info("No rating data available for this user")
         
@@ -219,7 +219,7 @@ with tab5:
             col1, col2 = st.columns(2)
             
             with col1:
-                st.dataframe(genre_df, use_container_width=True)
+                st.dataframe(genre_df)
             
             with col2:
                 # Violin plot
@@ -231,7 +231,7 @@ with tab5:
                         fig_violin.add_trace(go.Violin(y=genre_user_ratings, name=genre, side='positive'))
                 
                 fig_violin.update_layout(title="Rating Distribution by Genre (Violin Plot)", height=400, yaxis_title="Rating")
-                st.plotly_chart(fig_violin, use_container_width=True)
+                st.plotly_chart(fig_violin)
     
     # ========== ADVANCED TAB 2: OUTLIERS & ANOMALIES ==========
     with adv2:
@@ -272,7 +272,7 @@ with tab5:
                         xaxis_title="Rating",
                         yaxis_title="Count"
                     )
-                    st.plotly_chart(fig_outlier, use_container_width=True)
+                    st.plotly_chart(fig_outlier)
                 else:
                     st.info("No outliers detected in user ratings")
             else:
@@ -298,7 +298,7 @@ with tab5:
                 xaxis_title="Standard Deviation",
                 height=400
             )
-            st.plotly_chart(fig_variance, use_container_width=True)
+            st.plotly_chart(fig_variance)
         
         st.divider()
         
@@ -315,21 +315,21 @@ with tab5:
             critical_users = user_rating_stats[user_rating_stats['mean_rating'] < 2.0]
             st.metric("Very Critical Users", len(critical_users))
             if len(critical_users) > 0:
-                st.dataframe(critical_users.head(5), use_container_width=True)
+                st.dataframe(critical_users.head(5))
         
         with col2:
             # Very generous users
             generous_users = user_rating_stats[user_rating_stats['mean_rating'] > 4.0]
             st.metric("Very Generous Users", len(generous_users))
             if len(generous_users) > 0:
-                st.dataframe(generous_users.head(5), use_container_width=True)
+                st.dataframe(generous_users.head(5))
         
         with col3:
             # High variance users (inconsistent)
             inconsistent_users = user_rating_stats[user_rating_stats['std_rating'] > 1.5].dropna()
             st.metric("Inconsistent Users", len(inconsistent_users))
             if len(inconsistent_users) > 0:
-                st.dataframe(inconsistent_users.head(5), use_container_width=True)
+                st.dataframe(inconsistent_users.head(5))
     
     # ========== ADVANCED TAB 3: RECOMMENDATION METRICS ==========
     with adv3:
@@ -366,7 +366,7 @@ with tab5:
                 textinfo='label+percent'
             )])
             fig_ensemble.update_layout(title="Ensemble Model Weights", height=400)
-            st.plotly_chart(fig_ensemble, use_container_width=True)
+            st.plotly_chart(fig_ensemble)
         
         with col2:
             st.markdown("#### Recommendation Diversity Analysis")
@@ -391,7 +391,7 @@ with tab5:
                 textinfo='label+percent'
             )])
             fig_diversity.update_layout(title="Your Rating Distribution by Genre", height=400)
-            st.plotly_chart(fig_diversity, use_container_width=True)
+            st.plotly_chart(fig_diversity)
         
         st.divider()
         

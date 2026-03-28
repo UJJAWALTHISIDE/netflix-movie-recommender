@@ -190,7 +190,7 @@ def display_user_analytics_tab(user_ratings, movies):
                 height=400,
                 showlegend=False
             )
-            st.plotly_chart(fig_rating, use_container_width=True)
+            st.plotly_chart(fig_rating)
         
         with col2:
             # Genre preferences
@@ -207,7 +207,7 @@ def display_user_analytics_tab(user_ratings, movies):
                 height=400,
                 showlegend=False
             )
-            st.plotly_chart(fig_genres, use_container_width=True)
+            st.plotly_chart(fig_genres)
         
         # Rating statistics
         col1, col2, col3, col4 = st.columns(4)
@@ -305,7 +305,7 @@ def display_system_analytics_tab(ratings, movies, users):
             height=400,
             showlegend=False
         )
-        st.plotly_chart(fig_global, use_container_width=True)
+        st.plotly_chart(fig_global)
     
     with col2:
         # Top movies globally
@@ -320,7 +320,7 @@ def display_system_analytics_tab(ratings, movies, users):
             height=400,
             showlegend=False
         )
-        st.plotly_chart(fig_top, use_container_width=True)
+        st.plotly_chart(fig_top)
     
     st.divider()
     

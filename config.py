@@ -15,7 +15,6 @@ DATASET_CONFIG = {
 
 # Feature Engineering Config
 FEATURE_CONFIG = {
-    'embedding_dim': 50,
     'n_factors_svd': 50,
     'normalize_features': True,
     'fill_na_value': 0,
@@ -42,40 +41,62 @@ CB_CONFIG = {
     'feature_scaling': True
 }
 
-# XGBoost Config
-XGBOOST_CONFIG = {
-    'objective': 'reg:squarederror',
-    'max_depth': 6,
-    'learning_rate': 0.1,
-    'subsample': 0.8,
-    'colsample_bytree': 0.8,
-    'n_estimators': 100,
+# Classification Model Config (Binary: User likes/dislikes movie)
+CLASSIFICATION_CONFIG = {
+    'model_type': 'logistic_regression',  # 'logistic_regression', 'random_forest', 'svc'
+    'test_split': 0.2,
     'random_state': 42,
-    'sample_size': 500000,  # Use 500k samples for training
-    'test_split': 0.2
+    'like_threshold': 3.0,  # Ratings >= 3.0 are labeled as "Like"
+    'logistic_regression': {
+        'C': 1.0,
+        'max_iter': 100,
+        'solver': 'lbfgs'
+    },
+    'random_forest': {
+        'n_estimators': 100,
+        'max_depth': 10,
+        'min_samples_split': 5,
+        'random_state': 42
+    },
+    'svc': {
+        'kernel': 'rbf',
+        'C': 1.0,
+        'probability': True
+    }
 }
 
-# Neural Collaborative Filtering Config
-NCF_CONFIG = {
-    'embedding_dim': 50,
-    'dense_layers': [128, 64, 32],
-    'dropout_rate': 0.2,
-    'batch_size': 256,
-    'epochs': 5,
-    'learning_rate': 0.001,
-    'validation_split': 0.2,
-    'sample_size': 500000,
-    'optimizer': 'adam',
-    'loss': 'mse'
+# Regression Model Config (Predict rating: 1-5)
+REGRESSION_CONFIG = {
+    'model_type': 'random_forest',  # 'linear_regression', 'random_forest', 'gradient_boosting'
+    'test_split': 0.2,
+    'random_state': 42,
+    'feature_scaling': 'standard',
+    'linear_regression': {
+        'fit_intercept': True
+    },
+    'random_forest': {
+        'n_estimators': 100,
+        'max_depth': 15,
+        'min_samples_split': 5,
+        'random_state': 42,
+        'n_jobs': -1
+    },
+    'gradient_boosting': {
+        'n_estimators': 100,
+        'learning_rate': 0.1,
+        'max_depth': 5,
+        'min_samples_split': 5,
+        'random_state': 42
+    }
 }
 
 # Ensemble Recommender Config
 ENSEMBLE_CONFIG = {
     'model_weights': {
-        'collaborative_filtering': 0.25,
-        'content_based': 0.15,
-        'xgboost': 0.35,
-        'deep_learning': 0.25
+        'collaborative_filtering': 0.3,
+        'content_based': 0.2,
+        'classification': 0.25,
+        'regression': 0.25
     },
     'k': 10,  # Default number of recommendations
     'diversity': True,
@@ -115,7 +136,7 @@ VISUALIZATION_CONFIG = {
 RECOMMENDATION_CONFIG = {
     'default_k': 10,
     'default_method': 'ensemble',
-    'methods': ['collaborative_filtering', 'content_based', 'xgboost', 'deep_learning', 'ensemble'],
+    'methods': ['collaborative_filtering', 'content_based', 'classification', 'regression', 'ensemble'],
     'cold_start_strategy': 'popular',  # 'popular', 'random', 'demographic'
     'min_rating_threshold': 3.0
 }
@@ -142,8 +163,7 @@ PERFORMANCE_CONFIG = {
     'n_jobs': -1,  # Use all CPU cores
     'batch_processing': True,
     'cache_similarity': True,
-    'cache_predictions': True,
-    'use_gpu': False  # Set to True if CUDA available
+    'cache_predictions': True
 }
 
 # Hyperparameter Tuning Config
@@ -151,18 +171,7 @@ TUNING_CONFIG = {
     'grid_search': False,
     'random_search': False,
     'cv_folds': 5,
-    'param_grid': {
-        'xgboost': {
-            'max_depth': [4, 6, 8],
-            'learning_rate': [0.01, 0.05, 0.1],
-            'subsample': [0.6, 0.8, 1.0]
-        },
-        'ncf': {
-            'embedding_dim': [32, 50, 64],
-            'dense_layers': [[64, 32], [128, 64, 32], [256, 128, 64]],
-            'learning_rate': [0.001, 0.005, 0.01]
-        }
-    }
+    'param_grid': {}
 }
 
 # API Config (for future REST API)
@@ -182,8 +191,8 @@ def get_config(section=None):
         'features': FEATURE_CONFIG,
         'cf': CF_CONFIG,
         'cb': CB_CONFIG,
-        'xgboost': XGBOOST_CONFIG,
-        'ncf': NCF_CONFIG,
+        'classification': CLASSIFICATION_CONFIG,
+        'regression': REGRESSION_CONFIG,
         'ensemble': ENSEMBLE_CONFIG,
         'evaluation': EVALUATION_CONFIG,
         'dashboard': DASHBOARD_CONFIG,
